@@ -1,0 +1,26 @@
+apiVersion: webhookconfig.keptn.sh/v1alpha1
+kind: WebhookConfig
+metadata:
+  name: webhook-configuration
+spec:
+  webhooks:
+    - type: sh.keptn.event.evaluation.finished
+      requests:
+        - curl --request POST --data
+          '{"event":"{{.type}}","stage":"{{.data.stage}}","result":"{{.data.result}}
+          ({{.data.evaluation.score}} / 100)"}'
+          https://webhook.site/b6b20a3d-d607-4ccd-a257-4cd5154f2fd0
+      subscriptionID: 9c9c323f-6096-438d-9f36-a82c0239ea81
+    - type: sh.keptn.event.mytask-silent.triggered
+      sendFinished: true
+      requests:
+        - curl --request POST --data
+          '{"event":"{{.type}}","stage":"{{.data.stage}}","shkeptncontext":"{{.shkeptncontext}}","id":"{{.id}}"}'
+          https://webhook.site/b6b20a3d-d607-4ccd-a257-4cd5154f2fd0
+      subscriptionID: d3b7cc3c-c939-4033-82c7-c344714ccdb3
+    - type: sh.keptn.event.mytask-silent.finished
+      requests:
+        - curl --request POST --data
+          '{"event":"{{.type}}","stage":"{{.data.stage}}","shkeptncontext":"{{.shkeptncontext}}","id":"{{.id}}"}'
+          https://webhook.site/b6b20a3d-d607-4ccd-a257-4cd5154f2fd0
+      subscriptionID: 4ac83e8e-144b-4a0b-9a5c-f2aefc2eb414
